@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <title>Travel Dashboard</title>
+    <style>
+      table {
+        border-collapse: collapse;
+      }
+      tr, thead tr td{
+        border: solid 1px black;
+        margin: 0;
+        min-width: 40px;
+      }
+    </style>
+  </head>
+  <body>
+    <a href="{% url 'login:logout' %}">Logout</a>
+    <h1>Hello, {{ user.0.name }}</h1>
+    <table>
+      <caption>Your Trip Schedules</caption>
+      <thead>
+        <tr>
+          <td>Destination</td>
+          <td>Travel Start Date</td>
+          <td>Travel End Date</td>
+          <td>Plan</td>
+        </tr>
+      </thead>
+      <tbody>
+        {% for trip in mytrips %}
+          <tr>
+            <td><a href="{% url 'travels:destination' id=trip.id %}">
+              {{ trip.destination }}</a></td>
+            <td>{{ trip.startdate|date:'M d Y' }}</td>
+            <td>{{ trip.enddate|date:'M d Y' }}</td>
+            <td>{{ trip.description }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <table>
+      <caption>Other Users' Travel Plans</caption>
+      <thead>
+        <tr>
+          <td>Name</td>
+          <td>Destination</td>
+          <td>Travel Start Date</td>
+          <td>Travel End Date</td>
+          <td>Do You Want to Join?</td>
+        </tr>
+      </thead>
+      <tbody>
+        {% for trip in othertrips %}
+          <tr>
+            <td>{{ trip.creator.name }}</td>
+            <td><a href="{% url 'travels:destination' id=trip.id %}">
+              {{ trip.destination }}</a></td>
+            <td>{{ trip.startdate|date:'M d Y' }}</td>
+            <td>{{ trip.enddate|date:'M d Y' }}</td>
+            <td><a href="{% url 'travels:join' id=trip.id %}">Join</a></td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% for message in messages %}
+      <p>{{ message }}</p>
+    {% endfor %}
+    <h2><a href="{% url 'travels:addpage' %}">Add Travel Plan</a></h2>
+  </body>
+</html>

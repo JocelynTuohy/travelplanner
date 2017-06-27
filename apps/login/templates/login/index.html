@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <title>Secrets: Register or Log In</title>
+  </head>
+  <body>
+    <form action="{% url 'login:register' %}" method="POST">
+      {% csrf_token %}
+      <fieldset>
+        <legend>Register</legend>
+        Name: <input type="text" id="name" name="name">
+        Username: <input type="text" id="reg_username" name="reg_username">
+        Password: <input type="password" id="reg_password" name="reg_password">
+        <p>*Password should be at least 8 characters.</p>
+        Confirm Password: <input type="password" id="confirm" name="confirm">
+        <button type="submit" name="button" value="register">Register</button>
+      </fieldset>
+    </form>
+    <form action="{% url 'login:login' %}" method="POST">
+      {% csrf_token %}
+      <fieldset>
+        <legend>Log In</legend>
+        Username: <input type="text" id="log_username" name="log_username">
+        Password: <input type="password" id="log_password" name="log_password">
+        <button type="submit" name="button" value="login">Log In</button>
+      </fieldset>
+    </form>
+    {% for message in messages %}
+      <p>{{ message }}</p>
+    {% endfor %}
+  </body>
+</html>
